@@ -2,29 +2,35 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/signup.css">
   <title>Inscription</title>
 </head>
 <body>
-<h2>Créer un compte</h2>
+<div class="overlay"></div>
+<div class="signup-container">
+  <h2>Créer un compte</h2>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-<ul>
-  {% for category, message in messages %}
-  <li class="alert alert-{{ category }}">{{ message }}</li>
-  {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul class="no-bullets">
+    {% for category, message in messages %}
+    <li class="alert alert-{{ category }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
 
-<form method="POST">
-  <label for="username">Nom d'utilisateur:</label>
-  <input type="text" name="username" id="username" required><br>
-  <label for="password">Mot de passe:</label>
-  <input type="password" name="password" id="password" required><br>
-  <button type="submit">S'inscrire</button>
-</form>
+  <form method="POST">
+    <label for="username">Nom d'utilisateur:</label>
+    <input type="text" name="username" id="username" required><br>
+    <label for="password">Mot de passe:</label>
+    <input type="password" name="password" id="password" required><br>
+    <button type="submit">S'inscrire</button>
+  </form>
 
-<p>Déjà inscrit ? <a href="{{ url_for('login') }}">Se connecter</a></p>
+  <p>Déjà inscrit ? <a href="{{ url_for('login') }}">Se connecter</a></p>
+</div>
 </body>
 </html>
