@@ -51,22 +51,34 @@
     {% endif %}
 
     {% if session.get('user_id') %}
-    <div class="row">
-        <div class="col-md-6 text-left">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
             <p>Bienvenue, {{ session['user_id'] }}</p>
             <p>Découvrez Pimp My Burger, un site innovant où la créativité culinaire rencontre le plaisir du partage !</p>
-            <p class="">Rejoignez une communauté où chaque burger est une œuvre d’art et où vos idées peuvent devenir une inspiration pour d’autres. Burger Lab n’est pas juste un site, c’est une aventure culinaire interactive !
+            <p >Rejoignez une communauté où chaque burger est une œuvre d’art et où vos idées peuvent devenir une inspiration pour d’autres. Burger Lab n’est pas juste un site, c’est une aventure culinaire interactive !
                 👉 Prêt à créer le burger de vos rêves ?</p>
             <a href="{{ url_for('create_burger') }}" class="btn btn-primary">Créer un burger</a>
         </div>
         </div>
     </div>
+    <div class="col-md-8 text-center">
+
+    <p>Créez votre burger idéal à partir de zéro en personnalisant chaque élément :<br> 
+        <br> 
+        Choisissez votre pain : <br> 
+        brioché, complet, au sésame ou encore au charbon végétal
+        <br> 
+        Composez votre garniture : <br> 
+        steak, poulet, options végétariennes ou véganes, et ajoutez des fromages savoureux, légumes frais et sauces uniques
+        <br> 
+        Ajoutez une touche personnelle<br> 
+        Avec des ingrédients spéciaux ou insolites pour créer un chef-d'œuvre qui vous ressemble</p>
     {% else %}
     <p>Veuillez vous connecter pour créer un burger.</p>
     {% endif %}
 </div>
-<div class="hero-image" style="position: fixed; bottom: 0; right: 0;">
-    <img src="/static/images/burger.jpg" alt="">
+<div class="Image_burger" style="position: fixed;bottom: 0; right: 0;">
+    <img class="image-burger" src="/static/images/burger.jpg" alt="">
 </div>
 </body>
 </html>
