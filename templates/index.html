@@ -4,37 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/style.css">
     <title>Mes Burgers</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{{ url_for('index') }}">
+        <img src="/static/images/logo.png" width="70" height="70" class="d-inline-block align-top" alt="">
+    </a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if request.endpoint == 'index' %}active{% endif %}">
+                <a class="nav-link" href="{{ url_for('index') }}">Maison du chef</a>
+            </li>
+            <li class="nav-item {% if request.endpoint == 'my_burgers' %}active{% endif %}">
+                <a class="nav-link" href="{{ url_for('my_burgers') }}">Voir mes burgers</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if session.get('user_id') %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Se déconnecter</a>
+            </li>
+            {% else %}
+            <li class="nav-item {% if request.endpoint == 'login' %}active{% endif %}">
+                <a class="nav-link" href="{{ url_for('login') }}">Se connecter</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
 
-<h2>Tous les Burgers</h2>
-{% if burgers %}
-<ul>
-    {% for burger in burgers %}
-    <li>
-        <strong>{{ burger.name }}</strong> - Ingrédients : {{ burger.ingredients|join(", ") }}<br>
-        <strong>Note moyenne :</strong> {{ burger.average_rating if burger.average_rating else "Aucune note" }}<br>
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>Crée le premier Burger de l'histoire</p>
-{% endif %}
+<div class="container text-center mt-5">
+    <h2>Tous les Burgers</h2>
+    {% if burgers %}
+    <ul>
+        {% for burger in burgers %}
+        <li>
+            <strong>{{ burger.name }}</strong> - Ingrédients : {{ burger.ingredients|join(", ") }}<br>
+            <strong>Note moyenne :</strong> {{ burger.average_rating if burger.average_rating else "Aucune note" }}<br>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Crée le premier Burger de l'histoire</p>
+    {% endif %}
 
-<h2>Mes Burgers</h2>
-{% if session.get('user_id') %}
-<a href="{{ url_for('logout') }}">Se déconnecter</a><br><br>
-<p>Bienvenue, {{ session['user_id'] }}</p>
-<a href="{{ url_for('create_burger') }}">Créer un burger</a>
-{% else %}
-<a href="{{ url_for('login') }}">Se connecter</a><br><br>
-<p>Veuillez vous connecter pour créer un burger.</p>
-{% endif %}
-
-<a href="{{ url_for('my_burgers') }}">Voir mes burgers</a>
-<a href="{{ url_for('index') }}">Retour à l'accueil</a>
+    {% if session.get('user_id') %}
+    <div class="row">
+        <div class="col-md-6 text-left">
+            <p>Bienvenue, {{ session['user_id'] }}</p>
+            <p>Découvrez Pimp My Burger, un site innovant où la créativité culinaire rencontre le plaisir du partage !</p>
+            <p class="">Rejoignez une communauté où chaque burger est une œuvre d’art et où vos idées peuvent devenir une inspiration pour d’autres. Burger Lab n’est pas juste un site, c’est une aventure culinaire interactive !
+                👉 Prêt à créer le burger de vos rêves ?</p>
+            <a href="{{ url_for('create_burger') }}" class="btn btn-primary">Créer un burger</a>
+        </div>
+        </div>
+    </div>
+    {% else %}
+    <p>Veuillez vous connecter pour créer un burger.</p>
+    {% endif %}
+</div>
+<div class="hero-image" style="position: fixed; bottom: 0; right: 0;">
+    <img src="/static/images/burger.jpg" alt="">
+</div>
 </body>
 </html>
