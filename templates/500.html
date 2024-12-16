@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erreur interne du serveur - Burger Builder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="error-container">
+    <h1>500 - Erreur interne du serveur</h1>
+    <p>Oups ! Quelque chose s'est mal passé sur notre serveur. Essayez de réessayer plus tard.</p>
+    <a href="{{ url_for('index') }}">Retour à l'accueil</a>
+</div>
+</body>
+</html>

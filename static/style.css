@@ -102,3 +102,37 @@ button[type="submit"]:hover {
 input[type="checkbox"] {
     margin: 10px 0;
 }
+
+/* Page d'erreur */
+.error-container {
+    text-align: center;
+    padding: 50px;
+    background-color: #ffcccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+}
+
+.error-container h1 {
+    font-size: 3em;
+    color: #e53935;
+}
+
+.error-container p {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.error-container a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.error-container a:hover {
+    background-color: #e64a19;
+}

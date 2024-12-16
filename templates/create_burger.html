@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Créer un Burger</title>
+</head>
+<body>
+<h2>Créer un nouveau burger</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<ul>
+  {% for category, message in messages %}
+  <li class="alert alert-{{ category }}">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<form method="POST">
+  <label for="name">Nom du burger :</label>
+  <input type="text" name="name" id="name" required><br>
+
+  <label for="ingredients">Ingrédients (sélectionnez plusieurs) :</label><br>
+  <input type="checkbox" name="ingredients" value="Salade"> Salade<br>
+  <input type="checkbox" name="ingredients" value="Tomate"> Tomate<br>
+  <input type="checkbox" name="ingredients" value="Fromage"> Fromage<br>
+  <input type="checkbox" name="ingredients" value="Bacon"> Bacon<br>
+  <input type="checkbox" name="ingredients" value="Oignons"> Oignons<br>
+  <input type="checkbox" name="ingredients" value="Poulet"> Poulet<br>
+
+  <button type="submit">Créer le burger</button>
+</form>
+
+<p><a href="{{ url_for('index') }}">Retour à l'accueil</a></p>
+</body>
+</html>
