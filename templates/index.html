@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build-A-Burger</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Construis ton Burger !</h1>
+
+<h2>Liste des Burgers</h2>
+<ul>
+    {% for burger in burgers %}
+    <li>
+        <strong>{{ burger.name }}</strong> - Ingrédients: {{ burger.ingredients|join(", ") }} <br>
+        Note moyenne: {{ burger.average_rating }} / 5
+        <form action="{{ url_for('rate_burger', name=burger.name) }}" method="POST">
+            <label for="rating">Note (1 à 5) :</label>
+            <input type="number" name="rating" min="1" max="5">
+            <button type="submit">Noter</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Ajouter un Burger</h2>
+<form action="{{ url_for('add_burger') }}" method="POST">
+    <label for="name">Nom du Burger :</label>
+    <input type="text" name="name" required><br>
+
+    <label for="ingredients">Ingrédients :</label><br>
+    <input type="checkbox" name="ingredients" value="Bœuf"> Bœuf<br>
+    <input type="checkbox" name="ingredients" value="Fromage cheddar"> Fromage cheddar<br>
+    <input type="checkbox" name="ingredients" value="Laitue"> Laitue<br>
+    <input type="checkbox" name="ingredients" value="Sauce BBQ"> Sauce BBQ<br>
+
+    <label for="creator">Créateur :</label>
+    <input type="text" name="creator" required><br>
+
+    <button type="submit">Ajouter</button>
+</form>
+</body>
+</html>
