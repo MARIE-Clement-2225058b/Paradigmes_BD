@@ -9,14 +9,25 @@
 
 <h2>Tous les Burgers</h2>
 {% if burgers %}
-<ul>
     {% for burger in burgers %}
-    <li>
-        <strong>{{ burger.name }}</strong> - Ingrédients : {{ burger.ingredients|join(", ") }}<br>
-        <strong>Note moyenne :</strong> {{ burger.average_rating if burger.average_rating else "Aucune note" }}<br>
-    </li>
+    <div class="burger">
+        <h3>{{ burger.name }}</h3>
+        <p><strong>Créateur:</strong> {{ burger.creator }}</p>
+        <p><strong>Ingrédients:</strong> {{ burger.ingredients | join(', ') }}</p>
+        <p><strong>Note</strong> {{ burger.rating }} </p>
+        <!-- Formulaire de notation -->
+        {% if 'user_id' in session %}
+        <form action="{{ url_for('rate_burger', burger_id=burger._id) }}" method="POST">
+            <input type="hidden" name="user_id" value="{{ user_id }}">  <!-- ID de l'utilisateur connecté -->
+            <input type="number" name="rating" min="0" max="5" step="1" required>
+            <button type="submit">Soumettre ma note</button>
+        </form>
+        {% else %}
+        <p><a href="{{ url_for('login') }}">Connectez-vous</a> pour noter ce burger.</p>
+        {% endif %}
+    </div>
     {% endfor %}
-</ul>
+
 {% else %}
 <p>Crée le premier Burger de l'histoire</p>
 {% endif %}
