@@ -1,32 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+
+li {
+    list-style: none;
+}
+
 body {
     background-color: black;
-}
-
-.navbar {
-    margin-bottom: 20px;
-    background-color: #080808 !important; 
-}
-
-.nav-link {
-    color: #ffffff !important;
-}
-.navbar-brand {
-    color: #ffffff !important;
-    font-weight: bold;
-}
-
-.navbar .nav-link {
-    color: #ffffff;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-.navbar .nav-link:hover {
-    color: #B30000 !important;
-}
-
-.navbar .nav-item.active .nav-link {
-    color: #B30000 !important;
+    height: 100vh;
 }
 
 h2 {
@@ -39,13 +23,27 @@ p {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+
+    gap: 1rem;
+}
+
+.btn {
+    display: inline-block;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .btn-primary {
     margin-top: 20px;
     background-color: #B30000;
-    border-color: #B30000;
+    color: #ffffff;
+    padding: 1rem;
 }
 
 .btn-primary:hover {
@@ -59,34 +57,231 @@ p {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-main {
+.navbar {
+    grid-area: navbar;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "left right";
+    grid-template-areas: "left middle right";
+    grid-template-columns: 200px 2fr 200px;
+    grid-template-rows: 100px;
+    justify-items: center;
+    align-items: center;
+
+    background-color: #080808 !important;
+    padding: 0 1rem;
+
+    .nav-link {
+        color: #ffffff;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .nav-link:hover {
+        color: #B30000 !important;
+    }
+
+    .active {
+        color: #B30000 !important;
+    }
+
+    .left-section {
+        grid-area: left;
+        justify-self: start;
+        height: 100%;
+
+        .navbar-brand {
+            color: #ffffff !important;
+            font-weight: bold;
+            height: 100%;
+        }
+    }
+
+    .middle-section {
+        grid-area: middle;
+        justify-self: center;
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            list-style: none;
+
+            .nav-item {
+                padding: 1rem;
+            }
+        }
+    }
+
+    .right-section {
+        grid-area: right;
+        justify-self: end;
+    }
+}
+
+.two-part {
+    display: grid;
+    grid-template-areas:
+        "navbar"
+        "container";
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: 1fr auto;
+    align-items: center;
     height: 100%;
-}
 
-.left-panel {
-    grid-area: left;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    p {
-        text-align: center;
+    .container {
+        grid-area: container;
     }
 }
 
-.right-panel {
-    grid-area: right;
+.three-part {
+    display: grid;
+    grid-template-areas:
+        "navbar navbar"
+        "left-panel right-panel";
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    height: 100%;
+
+    .left-panel {
+        grid-area: left-panel;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0 2rem;
+
+        p {
+            text-align: center;
+        }
+    }
+
+    .right-panel {
+        grid-area: right-panel;
+        display: flex; /* Utilisation de Flexbox pour centrer ou ajuster si besoin */
+        justify-content: center; /* Facultatif : centre horizontalement l'image */
+        align-items: center; /* Facultatif : centre verticalement l'image */
+        overflow: hidden; /* Cache le débordement si nécessaire */
+        height: 100%;
+
+        img {
+            height: 100%;
+            width: auto;
+        }
+    }
+}
+
+/* Formulaire */
+.burger_form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    gap: 1rem; /* Espacement entre les champs */
+    width: 100%;
+    max-width: 500px; /* Limite de largeur pour une bonne lisibilité */
+    margin: 0 auto; /* Centre horizontalement le formulaire */
+    padding: 1.5rem;
+    background-color: #121212; /* Fond sombre */
+    border-radius: 8px; /* Coins arrondis pour un aspect moderne */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Ombre subtile */
+}
 
-    img {
-        width: 100%;
-        height: auto;
+.burger_form label {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.burger_form input[type="text"],
+.burger_form input[type="checkbox"] {
+    padding: 10px;
+    border: 1px solid #B30000; /* Bordure rouge */
+    border-radius: 5px; /* Coins arrondis */
+    background-color: #1e1e1e; /* Fond sombre */
+    color: #ffffff; /* Texte blanc */
+    font-size: 1rem;
+}
+
+.burger_form input[type="text"]::placeholder {
+    color: #888888; /* Couleur des placeholders */
+}
+
+.burger_form input[type="checkbox"] {
+    width: auto; /* Garder la taille normale pour les cases à cocher */
+    margin-right: 10px;
+    accent-color: #B30000; /* Couleur rouge pour la case cochée */
+}
+
+.burger_form button {
+    background-color: #B30000;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.burger_form button:hover {
+    background-color: #800000; /* Couleur plus sombre au survol */
+}
+
+.burger_form ul {
+    list-style-type: none; /* Suppression des puces des messages */
+    padding: 0;
+    margin: 0;
+}
+
+.burger_form ul li {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.burger_form ul li.alert-success {
+    background-color: #28a745; /* Vert pour succès */
+}
+
+.burger_form ul li.alert-danger {
+    background-color: #dc3545; /* Rouge pour erreur */
+}
+
+.burgers {
+    width: 70%;
+    li {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background-color: #1e1e1e;
+        border-radius: 10px;
+        padding: 1.5rem;
     }
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse; /* Inverser l'ordre des étoiles */
+    justify-content: center; /* Centrer les étoiles */
+}
+
+.rating input {
+    display: none; /* Masquer les radios */
+}
+
+.rating label {
+    font-size: 2rem; /* Taille des étoiles */
+    color: lightgray; /* Couleur des étoiles non sélectionnées */
+    cursor: pointer; /* Indiquer qu'on peut cliquer */
+}
+
+.rating input:checked ~ label {
+    color: gold; /* Couleur des étoiles sélectionnées */
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: gold; /* Mettre en surbrillance les étoiles survolées */
 }

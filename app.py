@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, current_app
+from flask import Flask, render_template, request, redirect, url_for, session, flash, current_app, jsonify
 from pymongo import errors
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
@@ -126,7 +126,7 @@ def delete_burger(burger_id):
 
     if burger:
         # Vérifier si l'utilisateur est le créateur du burger
-        if burger['creator_id'] == session['user_id']:
+        if burger['creator'] == session['user_id']:
             db.burgers.delete_one({'_id': ObjectId(burger_id)})
             flash('Burger supprimé avec succès!', 'success')
         else:
@@ -144,8 +144,24 @@ def my_burgers():
         return redirect(url_for('login'))
 
     # Récupérer les burgers créés par l'utilisateur
-    user_burgers = db.burgers.find({'creator_id': session['user_id']})
+    user_burgers = db.burgers.find({'creator': session['user_id']})
     return render_template('my_burgers.html', burgers=user_burgers)
+
+@app.route('/rate_burger/<burger_id>', methods=['GET'])
+def get_user_rating(burger_id):
+    if 'user_id' not in session:
+        return jsonify({'error': 'User not logged in'}), 403
+
+    user_id = session['user_id']  # ID de l'utilisateur connecté
+    burger = db.burgers.find_one({'_id': ObjectId(burger_id)})
+
+    if not burger:
+        return jsonify({'error': 'Burger not found'}), 404
+
+    # Chercher la note de l'utilisateur dans les 'ratings'
+    user_rating = next((vote['rating'] for vote in burger['ratings'] if vote['user_id'] == user_id), None)
+
+    return jsonify({'user_rating': user_rating})  # Retourner la note de l'utilisateur
 
 @app.route('/rate_burger/<burger_id>', methods=['POST'])
 def rate_burger(burger_id):

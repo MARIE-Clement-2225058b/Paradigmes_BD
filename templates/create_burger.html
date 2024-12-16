@@ -1,37 +1,66 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Créer un Burger</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Créer un Burger</title>
 </head>
 <body>
-<h2>Créer un nouveau burger</h2>
+<main class="two-part">
+    <nav class="navbar">
+        <div class="left-section">
+            <a href="{{ url_for('index') }}">
+                <img src="/static/images/logo.png" class="navbar-brand" alt="My Burger Logo"/>
+            </a>
+        </div>
+        <div class="middle-section">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">Maison du chef</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'my_burgers' %}active{% endif %}" href="{{ url_for('my_burgers') }}">Voir mes burgers</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right-section">
+            {% if session.get('user_id') %}
+                <a class="nav-link" href="{{ url_for('logout') }}">Se déconnecter</a>
+            {% else %}
+                <a class="nav-link {% if request.endpoint == 'login' %}active{% endif %}" href="{{ url_for('login') }}">Se connecter</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container">
+        <h2>Créer un nouveau burger</h2>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-<ul>
-  {% for category, message in messages %}
-  <li class="alert alert-{{ category }}">{{ message }}</li>
-  {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="alert alert-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
 
-<form method="POST">
-  <label for="name">Nom du burger :</label>
-  <input type="text" name="name" id="name" required><br>
+        <form class="burger_form" method="POST">
+            <label for="name">Nom du burger :</label>
+            <input type="text" name="name" id="name" required><br>
 
-  <label for="ingredients">Ingrédients (sélectionnez plusieurs) :</label><br>
-  <input type="checkbox" name="ingredients" value="Salade"> Salade<br>
-  <input type="checkbox" name="ingredients" value="Tomate"> Tomate<br>
-  <input type="checkbox" name="ingredients" value="Fromage"> Fromage<br>
-  <input type="checkbox" name="ingredients" value="Bacon"> Bacon<br>
-  <input type="checkbox" name="ingredients" value="Oignons"> Oignons<br>
-  <input type="checkbox" name="ingredients" value="Poulet"> Poulet<br>
+            <label for="ingredients">Ingrédients (sélectionnez plusieurs) :</label><br>
+            <input type="checkbox" name="ingredients" value="Salade"> Salade<br>
+            <input type="checkbox" name="ingredients" value="Tomate"> Tomate<br>
+            <input type="checkbox" name="ingredients" value="Fromage"> Fromage<br>
+            <input type="checkbox" name="ingredients" value="Bacon"> Bacon<br>
+            <input type="checkbox" name="ingredients" value="Oignons"> Oignons<br>
+            <input type="checkbox" name="ingredients" value="Poulet"> Poulet<br>
 
-  <button type="submit">Créer le burger</button>
-</form>
+            <button type="submit">Créer le burger</button>
+        </form>
 
-<p><a href="{{ url_for('index') }}">Retour à l'accueil</a></p>
+        <p><a href="{{ url_for('index') }}">Retour à l'accueil</a></p>
+    </div>
+</main>
 </body>
 </html>
