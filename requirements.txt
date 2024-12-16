@@ -1,0 +1,4 @@
+flask
+pymongo
+werkzeug
+bson
