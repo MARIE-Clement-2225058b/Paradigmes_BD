@@ -16,7 +16,7 @@ app.secret_key = f'{os.urandom(26)}'  # Utilisez os.urandom(24) pour une clé al
 
 # Connexion à MongoDB
 client = pymongo.MongoClient('mongodb://localhost:27017')
-client.drop_database('burger_app')
+##client.drop_database('burger_app')
 db = client['burger_app']
 
 # Créer les collections si elles n'existent pas, avec le validateur de schémas
