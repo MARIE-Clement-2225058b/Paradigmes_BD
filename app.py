@@ -18,14 +18,17 @@ app.secret_key = f'{os.urandom(26)}'  # Utilisez os.urandom(24) pour une clé al
 client = pymongo.MongoClient('mongodb://localhost:27017')
 ##client.drop_database('burger_app')
 db = client['burger_app']
-db.burgers.create_index([('name', pymongo.TEXT), ('ingredients', pymongo.TEXT)])
+db.burgers.deleteIndexes()
+db.users.deleteIndexes()
 
-#client.drop_database('burger_app')
+
 
 # Créer les collections si elles n'existent pas, avec le validateur de schémas
 try:
     db.create_collection('burgers', validator=burger_validator)
     db.create_collection('users', validator=user_validator)
+    db.burgers.create_index([('name', pymongo.TEXT)])
+    db.users.create_index([('username', pymongo.TEXT)])
     print("Collection 'burgers' et 'users' créées avec succès.")
 except errors.CollectionInvalid:
     print("Les collections 'burgers' et 'users' existent déjà.")
