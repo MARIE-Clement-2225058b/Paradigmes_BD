@@ -27,40 +27,63 @@
             {% if session.get('user_id') %}
                 <a class="nav-link" href="{{ url_for('logout') }}">Se déconnecter</a>
             {% else %}
-                <a class="nav-link {% if request.endpoint == 'login' %}active{% endif %}" href="{{ url_for('login') }}">Se connecter</a>
             {% endif %}
+                <a class="nav-link {% if request.endpoint == 'login' %}active{% endif %}" href="{{ url_for('login') }}">Se connecter</a>
         </div>
     </nav>
+
     <div class="container">
         <h2>Créer un nouveau burger</h2>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul>
-                    {% for category, message in messages %}
-                        <li class="alert alert-{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
 
         <form class="burger_form" method="POST">
             <label for="name">Nom du burger :</label>
             <input type="text" name="name" id="name" required><br>
 
             <label for="ingredients">Ingrédients (sélectionnez plusieurs) :</label><br>
-            <input type="checkbox" name="ingredients" value="Salade"> Salade<br>
-            <input type="checkbox" name="ingredients" value="Tomate"> Tomate<br>
-            <input type="checkbox" name="ingredients" value="Fromage"> Fromage<br>
-            <input type="checkbox" name="ingredients" value="Bacon"> Bacon<br>
-            <input type="checkbox" name="ingredients" value="Oignons"> Oignons<br>
-            <input type="checkbox" name="ingredients" value="Poulet"> Poulet<br>
+            <div class="ingredients">
+                <input type="checkbox" name="ingredients" value="Salade" id="salade" onchange="updateBurger()">
+                <label for="salade"><img src="/static/images/salad.png" alt="Salade"></label>
+
+                <input type="checkbox" name="ingredients" value="Tomate" id="tomate" onchange="updateBurger()">
+                <label for="tomate"><img src="/static/images/tomato.png" alt="Tomate"></label>
+
+                <input type="checkbox" name="ingredients" value="Fromage" id="fromage" onchange="updateBurger()">
+                <label for="fromage"><img src="/static/images/cheese.png" alt="Fromage"></label>
+
+                <input type="checkbox" name="ingredients" value="Bacon" id="bacon" onchange="updateBurger()">
+                <label for="bacon"><img src="/static/images/bacon.png" alt="Bacon"></label>
+
+                <input type="checkbox" name="ingredients" value="Oignons" id="oignons" onchange="updateBurger()">
+                <label for="oignons"><img src="/static/images/onions.png" alt="Oignons"></label>
+
+                <input type="checkbox" name="ingredients" value="Poulet" id="poulet" onchange="updateBurger()">
+                <label for="poulet"><img src="/static/images/steak.png" alt="Poulet"></label>
+            </div>
 
             <button type="submit">Créer le burger</button>
         </form>
 
+        <div class="burger-preview" id="burgerPreview">
+            <h3>Votre Burger</h3>
+            <img src="/static/images/upper_bread.png" width="100">
+            <div id="burgerIngredients"></div>
+            <img src="/static/images/lower_bread.png" width="100">
+        </div>
+
         <p><a href="{{ url_for('index') }}">Retour à l'accueil</a></p>
     </div>
 </main>
+
+<script>
+  function updateBurger() {
+    const ingredients = document.querySelectorAll('input[type="checkbox"]:checked + label img');
+    const burgerIngredients = document.getElementById('burgerIngredients');
+    burgerIngredients.innerHTML = '';
+    ingredients.forEach(img => {
+      const imgClone = img.cloneNode();
+      burgerIngredients.appendChild(imgClone);
+    });
+  }
+</script>
 </body>
 </html>

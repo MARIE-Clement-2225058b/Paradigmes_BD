@@ -285,3 +285,48 @@ p {
 .rating label:hover ~ label {
     color: gold; /* Mettre en surbrillance les étoiles survolées */
 }
+
+/* Burger preview */
+.burger-preview {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.burger-preview img {
+    display: block;
+    margin: 10px 0;
+    width: 100px;
+}
+
+.ingredients {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.ingredients input[type="checkbox"] {
+    display: none; /* Masquer les cases à cocher */
+}
+
+.ingredients label img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain; /* Ensure the image fits within the specified dimensions without distortion */
+    cursor: pointer;
+    transition: transform 0.3s, border 0.3s;
+    border: 2px solid transparent;
+    border-radius: 10px;
+}
+
+.ingredients input[type="checkbox"]:checked + label img {
+    border-color: #ff0000;
+    transform: scale(1.1);
+}
