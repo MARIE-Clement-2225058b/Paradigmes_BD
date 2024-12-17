@@ -13,7 +13,7 @@
         <div class="container">
             {% if session.get('user_id') %}
                 <h2>Tous les Burgers</h2>
-                {% if burgers.size %}
+                {% if burgers %}
                     <div class="search-container">
                         <input type="text" id="search-input" placeholder="Rechercher un burger..." />
                     </div>
