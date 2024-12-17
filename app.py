@@ -18,6 +18,8 @@ app.secret_key = f'{os.urandom(26)}'  # Utilisez os.urandom(24) pour une clé al
 client = pymongo.MongoClient('mongodb://localhost:27017')
 ##client.drop_database('burger_app')
 db = client['burger_app']
+db.burgers.create_index([('name', pymongo.TEXT), ('ingredients', pymongo.TEXT)])
+
 
 # Créer les collections si elles n'existent pas, avec le validateur de schémas
 try:
@@ -34,6 +36,45 @@ except errors.CollectionInvalid:
 def index():
     burgers = db.burgers.find()
     return render_template('index.html', burgers=burgers)
+
+@app.route('/filter_burgers')
+def filter_burgers():
+    query = request.args.get('q', '').lower()  # Texte du filtre
+    filtered_burgers = list(db.burgers.find({
+        '$or': [
+            {'name': {'$regex': query, '$options': 'i'}},
+            {'ingredients': {'$regex': query, '$options': 'i'}}
+        ]
+    }))
+
+    # Rendre uniquement le template partiel
+    return render_template('partials/burger_list.html', burgers=filtered_burgers)
+
+# Route pour la recherche AJAX
+@app.route('/search_live', methods=['GET'])
+def search_live():
+    query = request.args.get('q', '')  # Paramètre de recherche
+    results = []
+
+    if query:
+        # Recherche des burgers en utilisant l'index textuel
+        results = db.burgers.find({"$text": {"$search": query}})
+    else:
+        # Si aucun mot-clé n'est donné, on renvoie tous les burgers
+        results = db.burgers.find()
+
+    # Convertir les résultats en JSON pour les renvoyer
+    burgers = []
+    for burger in results:
+        burgers.append({
+            'id': str(burger['_id']),
+            'name': burger['name'],
+            'ingredients': ", ".join(burger.get('ingredients', [])),
+            'creator': burger['creator'],
+            'rating': burger.get('rating', 'Aucune note')
+        })
+
+    return jsonify(burgers)
 
 # Page de connexion
 @app.route('/login', methods=['GET', 'POST'])

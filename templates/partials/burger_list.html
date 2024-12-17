@@ -1,0 +1,31 @@
+<ul id="burger-list" class="burgers">
+  {% for burger in burgers %}
+  <li>
+    <p><strong>{{ burger.name }}</strong> - Ingrédients : {{ burger.ingredients|join(", ") }}</p>
+    <p><strong>Créateur :</strong> {{ burger.creator }}</p>
+    <p><strong>Note moyenne :</strong> {{ burger.rating if burger.rating else "Aucune note" }}</p>
+    {% if session.get('user_id') %}
+    <form class="rate-form" action="{{ url_for('rate_burger', burger_id=burger._id) }}" method="POST">
+      <div class="rating" id="rating-{{ burger._id }}">
+        <input type="radio" id="star5-{{ burger._id }}" name="rating" value="5" />
+        <label for="star5-{{ burger._id }}" title="5 étoiles">★</label>
+
+        <input type="radio" id="star4-{{ burger._id }}" name="rating" value="4" />
+        <label for="star4-{{ burger._id }}" title="4 étoiles">★</label>
+
+        <input type="radio" id="star3-{{ burger._id }}" name="rating" value="3" />
+        <label for="star3-{{ burger._id }}" title="3 étoiles">★</label>
+
+        <input type="radio" id="star2-{{ burger._id }}" name="rating" value="2" />
+        <label for="star2-{{ burger._id }}" title="2 étoiles">★</label>
+
+        <input type="radio" id="star1-{{ burger._id }}" name="rating" value="1" />
+        <label for="star1-{{ burger._id }}" title="1 étoile">★</label>
+      </div>
+    </form>
+    {% else %}
+    <p>Il faut se <a href="{{ url_for('login') }}">connecter</a> pour voter</p>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
