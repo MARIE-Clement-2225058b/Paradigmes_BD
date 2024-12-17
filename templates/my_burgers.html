@@ -15,7 +15,23 @@
             {% for burger in burgers %}
                 <li>
                     <form class="burger_form" action="{{ url_for('delete_burger', burger_id=burger._id) }}" method="POST">
-                        <h2><strong>{{ burger.name }}</strong> - Ingrédients: {{ burger.ingredients|join(", ") }}</h2>
+                        <h2><strong>{{ burger.name }}</strong></h2>
+                        <div class="burger-display">
+                            <div class="top-bun">
+                                <img src="/static/images/upper_bread.png" alt="Pain supérieur">
+                            </div>
+                            <div class="ingredients">
+                                {% for ingredient in burger.ingredients %}
+                                    <img src="/static/images/ingredients/{{ ingredient }}.png"
+                                         alt="{{ ingredient }}"
+                                         class="ingredient-image">
+                                {% endfor %}
+                            </div>
+
+                            <div class="bottom-bun">
+                                <img src="/static/images/lower_bread.png" alt="Pain inférieur">
+                            </div>
+                        </div>
                         <p><strong>Créateur :</strong> {{ burger.creator }}</p>
                         <button class="btn btn-primary" type="submit">Supprimer</button>
                     </form>
@@ -27,5 +43,6 @@
         <a href="{{ url_for('index') }}">Retour à l'accueil</a>
     </div>
 </main>
+
 </body>
 </html>
