@@ -20,6 +20,7 @@ client = pymongo.MongoClient('mongodb://localhost:27017')
 db = client['burger_app']
 db.burgers.create_index([('name', pymongo.TEXT), ('ingredients', pymongo.TEXT)])
 
+#client.drop_database('burger_app')
 
 # Créer les collections si elles n'existent pas, avec le validateur de schémas
 try:
@@ -36,6 +37,10 @@ except errors.CollectionInvalid:
 def index():
     burgers = db.burgers.find()
     return render_template('index.html', burgers=burgers)
+
+@app.route('/navbar')
+def navbar():
+    return render_template('partials/navbar.html')
 
 @app.route('/filter_burgers')
 def filter_burgers():

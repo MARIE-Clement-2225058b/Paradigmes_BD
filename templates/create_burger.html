@@ -7,30 +7,7 @@
 </head>
 <body>
 <main class="two-part">
-    <nav class="navbar">
-        <div class="left-section">
-            <a href="{{ url_for('index') }}">
-                <img src="/static/images/logo.png" class="navbar-brand" alt="My Burger Logo"/>
-            </a>
-        </div>
-        <div class="middle-section">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">Maison du chef</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if request.endpoint == 'my_burgers' %}active{% endif %}" href="{{ url_for('my_burgers') }}">Voir mes burgers</a>
-                </li>
-            </ul>
-        </div>
-        <div class="right-section">
-            {% if session.get('user_id') %}
-                <a class="nav-link" href="{{ url_for('logout') }}">Se déconnecter</a>
-            {% else %}
-            {% endif %}
-                <a class="nav-link {% if request.endpoint == 'login' %}active{% endif %}" href="{{ url_for('login') }}">Se connecter</a>
-        </div>
-    </nav>
+    {% include 'partials/navbar.html' %}
 
     <div class="container">
         <h2>Créer un nouveau burger</h2>
@@ -56,8 +33,8 @@
                 <input type="checkbox" name="ingredients" value="Oignons" id="oignons" onchange="updateBurger()">
                 <label for="oignons"><img src="/static/images/onions.png" alt="Oignons"></label>
 
-                <input type="checkbox" name="ingredients" value="Poulet" id="poulet" onchange="updateBurger()">
-                <label for="poulet"><img src="/static/images/steak.png" alt="Poulet"></label>
+                <input type="checkbox" name="ingredients" value="Steak" id="steak" onchange="updateBurger()">
+                <label for="steak"><img src="/static/images/steak.png" alt="Steak"></label>
             </div>
 
             <button type="submit">Créer le burger</button>
